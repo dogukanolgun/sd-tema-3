@@ -109,24 +109,41 @@ void printAllPathsUtil(struct Graph *graph, int N, int src,
                        int des, int *visited, int *counter,
                        int *path, int path_index)
 {
+   // printf("function called -> -> -> -> continue -> -> -> ->\n");
 
    // Mark the current node and store it in path[]
    visited[src] = 1;
    path[path_index] = src;
    path_index++;
 
+   // { // test purpose prints
+   //    printf("index: %d. Visited is: ", path_index);
+   //    for (int i = 0; i < N; i++)
+   //       printf("%d ", visited[i]);
+   //    // printf("\n");
+   //    printf(". Path is: ");
+   //    for (int i = 0; i < N; i++)
+   //       printf("%d ", path[i]);
+   //    printf("\n");
+   // }
+
    // If current vertex is same as destination, then print
    // current path[]
    if (src == des)
    {
-      // printf("%d", path[0]);
+      printf("%d", path[0]);
       counter[path[0]]++;
       for (int i = 1; i < path_index; i++)
       {
          counter[path[i]]++;
-         // printf(" -> %d", path[i]);
+         printf(" -> %d", path[i]);
       }
-
+      printf("\n");
+      // printf(" ||||||||||\n=============\n");
+      // printf("=============\n");
+      // printf("=============\n");
+      // printf("=============\n");
+      // printf("=============\n");
       if (path[1] == des)
       {
          path_index--;
@@ -141,20 +158,36 @@ void printAllPathsUtil(struct Graph *graph, int N, int src,
       while (iterate != NULL)
       {
          int i = iterate->vertex;
+         // printf("if === |%d| === hasnt been visited\n", i);
          if (!visited[i])
+         {
+            // printf("  ???   ??? ?  ?\n");
             printAllPathsUtil(graph, N, i, des, visited, counter, path, path_index);
-
+         }
+         // printf("|--------|\n");
+         // printf("| %d ->", iterate->vertex);
          if (iterate->next == NULL)
             break;
          else
             iterate = iterate->next;
+
+         // printf(" %d |\n|--------|\n", iterate->vertex);
       }
+      // printf("================================================\n");
+      // printf("================================================\n");
    }
 
    // Remove current vertex from path[] and mark it as unvisited
    path_index--;
    visited[src] = 0;
    path[path_index] = 0;
+   // printf("| END | index: %d. src: %d. Visited: ", path_index, src);
+   // for (int i = 0; i < N; i++)
+   //    printf("%d ", visited[i]);
+   // printf(".Path: ");
+   // for (int i = 0; i < N; i++)
+   //    printf("%d ", path[i]);
+   // printf("\n");
 }
 
 struct node *createNode(int v)
